@@ -10,7 +10,7 @@ const ProductList = ({ products, loading }) => {
   if (!products || products.length === 0) {
     return (
       <div className="empty-state">
-        <h2>📦 Aucun produit disponible</h2>
+        <h2>Aucun produit disponible</h2>
         <p>Soyez le premier à publier un produit!</p>
       </div>
     );

@@ -74,7 +74,7 @@ function App() {
 
       <main className="main-content">
         <div className="hero">
-          <h2>🌱 Économie Circulaire pour Étudiants d'Échange</h2>
+          <h2>Économie Circulaire pour Étudiants d'Échange</h2>
           <p>
             Achetez et vendez des articles d'occasion avec d'autres étudiants.
             Économisez de l'argent et aidez l'environnement.

@@ -6,7 +6,7 @@ const Header = ({ user, onLoginClick, onRegisterClick, onAddProductClick, onLogo
     <header className="header">
       <div className="header-content">
         <div className="logo" onClick={onLogoClick}>
-          <h1>🌱 EcoTrade</h1>
+          <h1>EcoTrade</h1>
         </div>
         <nav className="nav-buttons">
           {user ? (

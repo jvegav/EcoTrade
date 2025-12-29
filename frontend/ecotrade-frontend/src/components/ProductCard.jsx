@@ -12,8 +12,8 @@ const ProductCard = ({ product }) => {
         <p className="product-price">€{product.price.toFixed(2)}</p>
         <p className="product-description">{product.description}</p>
         <div className="product-meta">
-          <span className="product-use-time">⏱️ {product.useTime}</span>
-          <span className="product-owner">👤 {product.userName}</span>
+          <span className="product-use-time">{product.useTime}</span>
+          <span className="product-owner">{product.userName}</span>
         </div>
       </div>
     </div>
