@@ -1,5 +1,14 @@
 # 🌱 EcoTrade - Sustainable Exchange Platform for International Students
 
+## 🌐 Live Application
+
+**EcoTrade is now deployed and available online!**
+
+- 🖥️ **Frontend (Vercel)**: [https://eco-trade-one.vercel.app/](https://eco-trade-one.vercel.app/)
+- ⚙️ **Backend API (Render)**: [https://ecotrade-wzl2.onrender.com](https://ecotrade-wzl2.onrender.com)
+
+You can create an account, browse available products, and publish your own listings right now!
+
 ## 📖 About the Project
 
 **EcoTrade** is a full-stack web application for circular economy designed to address a critical sustainability challenge faced by exchange students at INSA Lyon and similar institutions worldwide.
