@@ -1,11 +1,11 @@
 # 🌱 EcoTrade - Plateforme d'Échange Durable pour Étudiants Internationaux
 
-## 🌐 Application en Ligne
+##  Application en Ligne
 
 **EcoTrade est maintenant déployé et accessible en ligne !**
 
-- 🖥️ **Frontend (Vercel)** : [https://eco-trade-one.vercel.app/](https://eco-trade-one.vercel.app/)
-- ⚙️ **Backend API (Render)** : [https://ecotrade-wzl2.onrender.com](https://ecotrade-wzl2.onrender.com)
+-  **Frontend (Vercel)** : [https://eco-trade-one.vercel.app/](https://eco-trade-one.vercel.app/)
+-  **Backend API (Render)** : [https://ecotrade-wzl2.onrender.com](https://ecotrade-wzl2.onrender.com)
 
 Vous pouvez créer un compte, parcourir les produits disponibles et publier vos propres annonces dès maintenant !
 

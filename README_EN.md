@@ -1,46 +1,46 @@
 # 🌱 EcoTrade - Sustainable Exchange Platform for International Students
 
-## 🌐 Live Application
+##  Live Application
 
 **EcoTrade is now deployed and available online!**
 
-- 🖥️ **Frontend (Vercel)**: [https://eco-trade-one.vercel.app/](https://eco-trade-one.vercel.app/)
-- ⚙️ **Backend API (Render)**: [https://ecotrade-wzl2.onrender.com](https://ecotrade-wzl2.onrender.com)
+-  **Frontend (Vercel)**: [https://eco-trade-one.vercel.app/](https://eco-trade-one.vercel.app/)
+- **Backend API (Render)**: [https://ecotrade-wzl2.onrender.com](https://ecotrade-wzl2.onrender.com)
 
 You can create an account, browse available products, and publish your own listings right now!
 
-## 📖 About the Project
+##  About the Project
 
 **EcoTrade** is a full-stack web application for circular economy designed to address a critical sustainability challenge faced by exchange students at INSA Lyon and similar institutions worldwide.
 
-## 🎯 Project Objectives
+##  Project Objectives
 
 ### Main Objective
 Create a digital platform that facilitates the **reuse and sharing of items** between successive generations of international students, transforming the "buy-throw-rebuy" cycle into a sustainable circular economy model.
 
 ### Specific Objectives
 
-1. **Environmental** 🌍
+1. **Environmental** 
    - Drastically reduce waste generated during semester student turnovers
    - Decrease carbon footprint related to production and transportation of new goods
    - Promote a culture of reuse and sustainability
 
-2. **Economic** 💰
+2. **Economic** 
    - Reduce setup costs for incoming students (€200-500 savings)
    - Allow outgoing students to recover part of their investment
    - Create a local and solidarity-based economic ecosystem
 
-3. **Social** 🤝
+3. **Social** 
    - Facilitate integration of new students
    - Create connections between student cohorts
    - Build a community based on mutual aid and sustainability
 
-4. **Practical** ⚡
+4. **Practical** 
    - Centralize offers and demands on a single platform
    - Simplify the buying/selling process between students
    - Ensure transparency and traceability of transactions
 
-### 🎯 The Problem
+###  The Problem
 
 Every semester, thousands of international students arrive and depart from academic institutions. This constant rotation creates significant environmental and economic challenges:
 
@@ -50,35 +50,35 @@ Every semester, thousands of international students arrive and depart from acade
 - **Lack of coordination**: No centralized platform exists to connect departing students with arriving ones
 - **Systemic waste**: The cycle repeats every semester, generating considerable cumulative impact
 
-### 💡 The EcoTrade Solution
+###  The EcoTrade Solution
 
 EcoTrade bridges this gap by creating a **peer-to-peer marketplace** specifically designed for the exchange student lifecycle:
 
-- 🔄 **Circular Economy**: Items remain in circulation within the student community instead of being discarded
-- 💰 **Affordable**: Incoming students can purchase quality second-hand items at reduced prices
-- 🌍 **Sustainable**: Reduces waste and carbon footprint associated with manufacturing and shipping new products
-- 🤝 **Community-driven**: Facilitates connections between departing and arriving students
-- ⚡ **Simple and Fast**: Intuitive French interface for easy adoption
+-  **Circular Economy**: Items remain in circulation within the student community instead of being discarded
+-  **Affordable**: Incoming students can purchase quality second-hand items at reduced prices
+-  **Sustainable**: Reduces waste and carbon footprint associated with manufacturing and shipping new products
+-  **Community-driven**: Facilitates connections between departing and arriving students
+-  **Simple and Fast**: Intuitive French interface for easy adoption
 
 ## ✨ Implemented Features
 
 ### Frontend (React)
-- ✅ **Home page** with gallery of all available products
-- ✅ **Authentication system**: User registration and login
-- ✅ **Dynamic interface**: Conditional display based on login status
-- ✅ **Product addition**: Complete form to publish listings
-- ✅ **Product cards**: Attractive display with price, description, usage time, and owner
-- ✅ **Responsive design**: Compatible with mobile, tablet, and desktop
-- ✅ **French interface**: Adapted to INSA Lyon context
+-   **Home page** with gallery of all available products
+-   **Authentication system**: User registration and login
+-   **Dynamic interface**: Conditional display based on login status
+-   **Product addition**: Complete form to publish listings
+-   **Product cards**: Attractive display with price, description, usage time, and owner
+-   **Responsive design**: Compatible with mobile, tablet, and desktop
+-   **French interface**: Adapted to INSA Lyon context
 
 ### Backend (Spring Boot)
-- ✅ **Complete RESTful API** for users and products
-- ✅ **PostgreSQL database** hosted on Supabase
-- ✅ **DTOs** to avoid circular references
-- ✅ **Validation** and error handling
-- ✅ **MVC Architecture**: Models, Services, Repositories, Controllers
+-   **Complete RESTful API** for users and products
+-   **PostgreSQL database** hosted on Supabase
+-   **DTOs** to avoid circular references
+-   **Validation** and error handling
+-   **MVC Architecture**: Models, Services, Repositories, Controllers
 
-## 🛠️ Complete Technology Stack
+##  Complete Technology Stack
 
 ### Backend
 - **Java 25** with **Spring Boot 4.0.1**
@@ -109,7 +109,7 @@ Users (id, created_at, name, email, nationality, password)
 Products (id, created_at, name, price, description, use_time, user_id)
 ```
 
-## 🚀 Installation and Setup
+##  Installation and Setup
 
 ### Backend
 
@@ -176,7 +176,7 @@ cd frontend/ecotrade-frontend && npm run dev
 - `PUT /api/products/{id}` - Update product
 - `DELETE /api/products/{id}` - Delete product
 
-## 🌍 Estimated Environmental Impact
+##  Estimated Environmental Impact
 
 ### At INSA Lyon (~500 exchange students/year)
 
@@ -192,7 +192,7 @@ If deployed in 50+ host institutions in France:
 - **€15-20 million** saved by students
 - **Social impact**: 25,000+ students helped annually
 
-## 💭 Personal Motivation
+##  Personal Motivation
 
 ### The Story Behind EcoTrade
 
@@ -205,9 +205,9 @@ At the end of each semester, the same scene repeated itself: students didn't kno
 - *"I'll have to throw away my desk lamp that works perfectly"*
 
 My peers' solutions were often the same:
-- 🗑️ **Throw in the trash**: Perfectly functional items ended up in the waste
-- 📦 **Abandon on the street**: Leave things outside hoping someone would take them
-- 🤷 **Do nothing**: Leave everything in the room for the next occupant without coordination
+-  **Throw in the trash**: Perfectly functional items ended up in the waste
+-  **Abandon on the street**: Leave things outside hoping someone would take them
+-  **Do nothing**: Leave everything in the room for the next occupant without coordination
 
 ### The Trigger
 
@@ -216,34 +216,34 @@ It was by seeing this situation repeat itself semester after semester that the i
 > *"There must be a better solution. What if we could connect students who are leaving with those who are arriving?"*
 
 This observation pushed me to create a platform that:
-- ✅ Gives a **second life** to objects instead of throwing them away
-- ✅ Allows departing students to **recover part of their investment**
-- ✅ Helps newcomers **get equipped at lower cost**
-- ✅ Reduces the **environmental impact** of student turnover
-- ✅ Creates a **supportive community** between generations of students
+-   Gives a **second life** to objects instead of throwing them away
+-   Allows departing students to **recover part of their investment**
+-   Helps newcomers **get equipped at lower cost**
+-   Reduces the **environmental impact** of student turnover
+-   Creates a **supportive community** between generations of students
 
 EcoTrade is not just a technical project, it's a **concrete answer** to a real problem I experienced and observed daily.
 
-## 🎓 Context and Skills Demonstration
+##  Context and Skills Demonstration
 
 This project was developed as a **personal initiative** to address a real need observed at INSA Lyon. It demonstrates:
 
 ### Technical Skills
-- ✅ **Full-Stack** development (Java Backend + React Frontend)
-- ✅ **RESTful** and **MVC** architecture
-- ✅ **Relational database** management
-- ✅ **Cloud** integration (Supabase)
-- ✅ **Version control** with Git
-- ✅ **Responsive design** and modern UX
+-   **Full-Stack** development (Java Backend + React Frontend)
+-   **RESTful** and **MVC** architecture
+-   **Relational database** management
+-   **Cloud** integration (Supabase)
+-   **Version control** with Git
+-   **Responsive design** and modern UX
 
 ### Soft Skills
-- 🎯 **Problem identification**: Observation of a real need
-- 💡 **Innovation**: Technological solution to a social challenge
-- 🌍 **Environmental awareness**: Application of circular economy principles
-- 📊 **Impact analysis**: Quantification of environmental and economic benefits
-- 🚀 **Initiative**: Project carried out autonomously from A to Z
+-  **Problem identification**: Observation of a real need
+-  **Innovation**: Technological solution to a social challenge
+-  **Environmental awareness**: Application of circular economy principles
+-  **Impact analysis**: Quantification of environmental and economic benefits
+-  **Initiative**: Project carried out autonomously from A to Z
 
-## 📝 Future Improvements
+##  Future Improvements
 
 ### Short Term
 - [ ] Image upload for products
@@ -266,16 +266,16 @@ This project was developed as a **personal initiative** to address a real need o
 ## 👤 Author
 
 **Josue Vega**
-- 🎓 Student at INSA Lyon
-- 🌱 Passionate about sustainable technological solutions
-- 💻 Full-Stack Developer
-- 🌍 Committed to circular economy
+- Student at INSA Lyon
+-  Passionate about sustainable technological solutions
+-  Full-Stack Developer
+-  Committed to circular economy
 
-## 📄 License
+##  License
 
 This project is open-source and available for educational purposes.
 
-## 🙏 Contribution
+##  Contribution
 
 This project is open to contributions! Feel free to:
 - Report bugs
