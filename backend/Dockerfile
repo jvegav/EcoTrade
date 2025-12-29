@@ -1,27 +1,30 @@
 # Etapa 1: Construcción (Build)
-FROM maven:3.9.9-eclipse-temurin-25-alpine AS build
+# Usamos una imagen de Maven sobre JDK 21 (que es estable) para compilar, 
+# pero apuntamos a que el resultado sea compatible con Java 25.
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# 1. Copiar el archivo de configuración de Maven
+# Copiar el archivo de configuración
 COPY pom.xml .
 
-# 2. Descargar dependencias (esto acelera futuras compilaciones)
+# Descargar dependencias
 RUN mvn dependency:go-offline
 
-# 3. Copiar el código fuente y construir el JAR
+# Copiar el código fuente y compilar
 COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Etapa 2: Ejecución (Runtime)
-FROM eclipse-temurin:25-jdk-alpine
+# Aquí es donde usamos Java 25 para correr tu app
+FROM eclipse-temurin:25-jdk
 WORKDIR /app
 
-# Copiamos el JAR generado en la etapa anterior
-# El nombre debe coincidir con el artifactId y version de tu pom.xml
+# Copiamos el JAR generado
 COPY --from=build /app/target/ecotrade-0.0.1-SNAPSHOT.jar app.jar
 
-# Exponer el puerto que usa Spring Boot
 EXPOSE 8080
 
-# Comando para arrancar la aplicación
+# Configuración de memoria para el plan gratuito de Render
+ENV JAVA_TOOL_OPTIONS="-Xmx300m -Xms250m"
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
