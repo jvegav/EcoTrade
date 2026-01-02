@@ -34,6 +34,8 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
         }
       });
 
+      localStorage.setItem('user', JSON.stringify(data.user));
+
       if (error) throw error;
 
       if (onRegisterSuccess && data) {
