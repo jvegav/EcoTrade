@@ -21,9 +21,8 @@ const LoginModal = ({ onClose, onLoginSuccess }) => {
 
       if (error) throw error;
 
-      // Guardar usuario y sesión en localStorage
+      // Guardar usuario en localStorage (la sesión la gestiona Supabase de forma segura)
       localStorage.setItem('user', JSON.stringify(data.user));
-      localStorage.setItem('session', JSON.stringify(data.session));
       
       onLoginSuccess(data.user);
       onClose();
