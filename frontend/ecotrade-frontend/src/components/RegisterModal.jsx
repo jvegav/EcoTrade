@@ -36,6 +36,9 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
 
       if (error) throw error;
 
+      if (onRegisterSuccess && data) {
+        onRegisterSuccess(data);
+      }
       setShowSuccess(true);
     } catch (err) {
       setError(err.message || 'Erreur lors de l\'inscription');
