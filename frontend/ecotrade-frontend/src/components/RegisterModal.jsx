@@ -34,13 +34,8 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
         }
       });
 
-      localStorage.setItem('user', JSON.stringify(data.user));
-
       if (error) throw error;
 
-      if (onRegisterSuccess && data) {
-        onRegisterSuccess(data);
-      }
       setShowSuccess(true);
     } catch (err) {
       setError(err.message || 'Erreur lors de l\'inscription');
