@@ -1,41 +1,43 @@
 import React, { useState } from 'react';
-import { userAPI } from '../services/api';
+import { supabase } from '../services/supabase';
 import './RegisterModal.css';
 
 const RegisterModal = ({ onClose, onRegisterSuccess }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    nationality: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await userAPI.createUser(formData);
-      const newUser = response.data;
-      localStorage.setItem('user', JSON.stringify(newUser));
-      onRegisterSuccess(newUser);
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name: name,
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      alert('Vérifiez votre email pour confirmer votre inscription');
       onClose();
     } catch (err) {
-      if (err.response?.data) {
-        setError(err.response.data);
-      } else {
-        setError('Erreur lors de la création de l\'utilisateur. Veuillez réessayer.');
-      }
+      setError(err.message || 'Erreur lors de l\'inscription');
     } finally {
       setLoading(false);
     }
@@ -45,26 +47,24 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
-        <h2>Créer un Compte</h2>
+        <h2>S'inscrire</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nom</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
-              placeholder="Votre nom complet"
+              placeholder="Votre nom"
             />
           </div>
           <div className="form-group">
             <label>Email</label>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="votre@email.com"
             />
@@ -73,28 +73,26 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
             <label>Mot de passe</label>
             <input
               type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
-              placeholder="Minimum 6 caractères"
-              minLength="6"
+              placeholder="Votre mot de passe"
+              minLength={6}
             />
           </div>
           <div className="form-group">
-            <label>Nationalité</label>
+            <label>Confirmer le mot de passe</label>
             <input
-              type="text"
-              name="nationality"
-              value={formData.nationality}
-              onChange={handleChange}
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              placeholder="Votre pays d'origine"
+              placeholder="Confirmez votre mot de passe"
             />
           </div>
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="btn-submit" disabled={loading}>
-            {loading ? 'Création du compte...' : 'S\'inscrire'}
+            {loading ? 'Inscription...' : 'S\'inscrire'}
           </button>
         </form>
       </div>
