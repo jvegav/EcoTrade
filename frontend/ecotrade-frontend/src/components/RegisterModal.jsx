@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
+import SuccessNotification from './SuccessNotification';
 import './RegisterModal.css';
 
 const RegisterModal = ({ onClose, onRegisterSuccess }) => {
@@ -9,6 +10,7 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,8 +36,7 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
 
       if (error) throw error;
 
-      alert('Vérifiez votre email pour confirmer votre inscription');
-      onClose();
+      setShowSuccess(true);
     } catch (err) {
       setError(err.message || 'Erreur lors de l\'inscription');
     } finally {
@@ -44,7 +45,17 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <>
+      {showSuccess && (
+        <SuccessNotification
+          message="Vérifiez votre email pour confirmer votre inscription et commencer à utiliser EcoTrade."
+          onClose={() => {
+            setShowSuccess(false);
+            onClose();
+          }}
+        />
+      )}
+      <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
         <h2>S'inscrire</h2>
@@ -97,6 +108,7 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
