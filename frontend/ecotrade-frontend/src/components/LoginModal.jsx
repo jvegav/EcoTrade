@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { userAPI } from '../services/api';
+import { supabase } from '../services/supabase';
 import './LoginModal.css';
 
 const LoginModal = ({ onClose, onLoginSuccess }) => {
@@ -14,20 +14,20 @@ const LoginModal = ({ onClose, onLoginSuccess }) => {
     setLoading(true);
 
     try {
-      // Get user by email
-      const response = await userAPI.getUserByEmail(email);
-      const user = response.data;
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-      // Simple password verification (en producción usar autenticación real)
-      if (user.password === password) {
-        localStorage.setItem('user', JSON.stringify(user));
-        onLoginSuccess(user);
-        onClose();
-      } else {
-        setError('Mot de passe incorrect');
-      }
+      if (error) throw error;
+
+      // Guardar usuario en localStorage (la sesión la gestiona Supabase de forma segura)
+      localStorage.setItem('user', JSON.stringify(data.user));
+      
+      onLoginSuccess(data.user);
+      onClose();
     } catch (err) {
-      setError('Utilisateur non trouvé ou identifiants incorrects');
+      setError(err.message || 'Erreur de connexion');
     } finally {
       setLoading(false);
     }
