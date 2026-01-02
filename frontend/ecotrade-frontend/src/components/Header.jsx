@@ -11,7 +11,7 @@ const Header = ({ user, onLoginClick, onRegisterClick, onAddProductClick, onLogo
         <nav className="nav-buttons">
           {user ? (
             <>
-              <span className="user-welcome">Bonjour, {user.name}!</span>
+              <span className="user-welcome">Bonjour, {user.user_metadata.name} !</span>
               <button onClick={onAddProductClick} className="btn-primary">
                 + Ajouter un Produit
               </button>

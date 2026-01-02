@@ -21,7 +21,10 @@ const LoginModal = ({ onClose, onLoginSuccess }) => {
 
       if (error) throw error;
 
+      // Guardar usuario y sesión en localStorage
       localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('session', JSON.stringify(data.session));
+      
       onLoginSuccess(data.user);
       onClose();
     } catch (err) {
