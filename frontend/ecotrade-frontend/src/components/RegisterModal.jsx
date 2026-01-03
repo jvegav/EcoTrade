@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
+import { userAPI } from '../services/api';
 import SuccessNotification from './SuccessNotification';
 import './RegisterModal.css';
 
@@ -8,6 +9,7 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
+  const [nationality, setNationality] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -24,7 +26,8 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      // Registro en Supabase
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -35,6 +38,16 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
       });
 
       if (error) throw error;
+
+      // Registro en el backend
+      if (data.user) {
+        await userAPI.register({
+          name: name,
+          email: email,
+          nationality: nationality,
+          supabaseId: data.user.id
+        });
+      }
 
       setShowSuccess(true);
     } catch (err) {
@@ -78,6 +91,16 @@ const RegisterModal = ({ onClose, onRegisterSuccess }) => {
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="votre@email.com"
+            />
+          </div>
+          <div className="form-group">
+            <label>Nationalité</label>
+            <input
+              type="text"
+              value={nationality}
+              onChange={(e) => setNationality(e.target.value)}
+              required
+              placeholder="Votre nationalité"
             />
           </div>
           <div className="form-group">

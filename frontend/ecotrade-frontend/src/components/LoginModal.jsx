@@ -14,6 +14,7 @@ const LoginModal = ({ onClose, onLoginSuccess }) => {
     setLoading(true);
 
     try {
+      // Login en Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -21,8 +22,9 @@ const LoginModal = ({ onClose, onLoginSuccess }) => {
 
       if (error) throw error;
 
-      // Guardar usuario en localStorage (la sesión la gestiona Supabase de forma segura)
+      // Guardar usuario en localStorage
       localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('session', JSON.stringify(data.session));
       
       onLoginSuccess(data.user);
       onClose();
