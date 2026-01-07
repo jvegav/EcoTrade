@@ -1,104 +1,137 @@
 import React, { useState } from 'react';
+import { supabase } from '../services/supabase';
 import { userAPI } from '../services/api';
+import SuccessNotification from './SuccessNotification';
 import './RegisterModal.css';
 
 const RegisterModal = ({ onClose, onRegisterSuccess }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    nationality: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [nationality, setNationality] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await userAPI.createUser(formData);
-      const newUser = response.data;
-      localStorage.setItem('user', JSON.stringify(newUser));
-      onRegisterSuccess(newUser);
-      onClose();
-    } catch (err) {
-      if (err.response?.data) {
-        setError(err.response.data);
-      } else {
-        setError('Erreur lors de la création de l\'utilisateur. Veuillez réessayer.');
+      // Registro en Supabase
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name: name,
+          }
+        }
+      });
+
+      if (error) throw error;
+
+      // Registro en el backend
+      if (data.user) {
+        await userAPI.register({
+          name: name,
+          email: email,
+          nationality: nationality,
+          supabaseId: data.user.id
+        });
       }
+
+      setShowSuccess(true);
+    } catch (err) {
+      setError(err.message || 'Erreur lors de l\'inscription');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <>
+      {showSuccess && (
+        <SuccessNotification
+          message="Vérifiez votre email pour confirmer votre inscription et commencer à utiliser EcoTrade."
+          onClose={() => {
+            setShowSuccess(false);
+            onClose();
+          }}
+        />
+      )}
+      <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
-        <h2>Créer un Compte</h2>
+        <h2>S'inscrire</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Nom</label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
-              placeholder="Votre nom complet"
+              placeholder="Votre nom"
             />
           </div>
           <div className="form-group">
             <label>Email</label>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="votre@email.com"
-            />
-          </div>
-          <div className="form-group">
-            <label>Mot de passe</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              placeholder="Minimum 6 caractères"
-              minLength="6"
             />
           </div>
           <div className="form-group">
             <label>Nationalité</label>
             <input
               type="text"
-              name="nationality"
-              value={formData.nationality}
-              onChange={handleChange}
+              value={nationality}
+              onChange={(e) => setNationality(e.target.value)}
               required
-              placeholder="Votre pays d'origine"
+              placeholder="Votre nationalité"
+            />
+          </div>
+          <div className="form-group">
+            <label>Mot de passe</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="Votre mot de passe"
+              minLength={6}
+            />
+          </div>
+          <div className="form-group">
+            <label>Confirmer le mot de passe</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              placeholder="Confirmez votre mot de passe"
             />
           </div>
           {error && <div className="error-message">{error}</div>}
           <button type="submit" className="btn-submit" disabled={loading}>
-            {loading ? 'Création du compte...' : 'S\'inscrire'}
+            {loading ? 'Inscription...' : 'S\'inscrire'}
           </button>
         </form>
       </div>
     </div>
+    </>
   );
 };
 
