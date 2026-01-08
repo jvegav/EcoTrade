@@ -12,7 +12,7 @@ public class ProductResponseDTO {
     private String description;
     private String useTime;
     private String userName;
-    private Long userId;
+    private String userId;
 
     // Constructor vacío
     public ProductResponseDTO() {
@@ -89,11 +89,11 @@ public class ProductResponseDTO {
         this.userName = userName;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class UserResponseDTO {
     
-    private Long id;
+    private String id;
     private LocalDateTime createdAt;
     private String name;
     private String email;
@@ -25,11 +25,11 @@ public class UserResponseDTO {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

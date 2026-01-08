@@ -32,11 +32,11 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public List<Product> getProductsByUserId(Long userId) {
+    public List<Product> getProductsByUserId(String userId) {
         return productRepository.findByUserId(userId);
     }
 
-    public Product createProduct(Product product, Long userId) {
+    public Product createProduct(Product product, String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         

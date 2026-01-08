@@ -34,7 +34,7 @@ public class ProductController {
 
     // Endpoint específico debe ir ANTES del genérico para evitar ambigüedad
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ProductResponseDTO>> getProductsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<ProductResponseDTO>> getProductsByUserId(@PathVariable String userId) {
         List<Product> products = productService.getProductsByUserId(userId);
         List<ProductResponseDTO> productDTOs = products.stream()
                 .map(ProductResponseDTO::new)
@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity<?> createProduct(@RequestBody Product product, @PathVariable Long userId) {
+    public ResponseEntity<?> createProduct(@RequestBody Product product, @PathVariable String userId) {
         try {
             Product createdProduct = productService.createProduct(product, userId);
             ProductResponseDTO productDTO = new ProductResponseDTO(createdProduct);

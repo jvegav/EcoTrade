@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable String id) {
         return userService.getUserById(id)
                 .map(UserResponseDTO::new)
                 .map(ResponseEntity::ok)
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody User userDetails) {
         try {
             User updatedUser = userService.updateUser(id, userDetails);
             UserResponseDTO userDTO = new UserResponseDTO(updatedUser);
@@ -75,7 +75,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable String id) {
         try {
             userService.deleteUser(id);
             return ResponseEntity.ok().body("User deleted successfully");
@@ -96,6 +96,7 @@ public class UserController {
             // Solo sincronizar datos adicionales si el usuario no existe
             if (!userService.existsByEmail(registerRequest.getEmail())) {
                 User user = new User();
+                user.setId(registerRequest.getSupabaseId()); // Usar el UUID de Supabase como ID
                 user.setName(registerRequest.getName());
                 user.setEmail(registerRequest.getEmail());
                 user.setNationality(registerRequest.getNationality());
