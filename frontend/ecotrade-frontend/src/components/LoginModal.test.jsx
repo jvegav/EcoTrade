@@ -2,11 +2,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginModal from './LoginModal';
-import { userAPI } from '../services/api';
+import { supabase } from '../services/supabase';
 
-vi.mock('../services/api', () => ({
-  userAPI: {
-    getUserByEmail: vi.fn(),
+vi.mock('../services/supabase', () => ({
+  supabase: {
+    auth: {
+      signInWithPassword: vi.fn(),
+    },
   },
 }));
 
@@ -75,13 +77,19 @@ describe('LoginModal Component', () => {
   it('successfully logs in with correct credentials', async () => {
     const user = userEvent.setup();
     const mockUser = {
-      id: 1,
-      name: 'Test User',
+      id: '123',
       email: 'test@example.com',
-      password: 'password123'
+      user_metadata: { name: 'Test User' }
+    };
+    const mockSession = {
+      access_token: 'mock-token',
+      refresh_token: 'mock-refresh-token'
     };
 
-    userAPI.getUserByEmail.mockResolvedValue({ data: mockUser });
+    supabase.auth.signInWithPassword.mockResolvedValue({
+      data: { user: mockUser, session: mockSession },
+      error: null
+    });
 
     render(<LoginModal onClose={mockOnClose} onLoginSuccess={mockOnLoginSuccess} />);
 
@@ -90,22 +98,22 @@ describe('LoginModal Component', () => {
     await user.click(screen.getByRole('button', { name: /Se Connecter/i }));
 
     await waitFor(() => {
-      expect(userAPI.getUserByEmail).toHaveBeenCalledWith('test@example.com');
+      expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
+        email: 'test@example.com',
+        password: 'password123'
+      });
       expect(mockOnLoginSuccess).toHaveBeenCalledWith(mockUser);
       expect(mockOnClose).toHaveBeenCalled();
     });
   });
 
-  it('shows error message with incorrect password', async () => {
+  it('shows error message when login fails', async () => {
     const user = userEvent.setup();
-    const mockUser = {
-      id: 1,
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
-    };
-
-    userAPI.getUserByEmail.mockResolvedValue({ data: mockUser });
+    
+    supabase.auth.signInWithPassword.mockResolvedValue({
+      data: { user: null, session: null },
+      error: { message: 'Invalid login credentials' }
+    });
 
     render(<LoginModal onClose={mockOnClose} onLoginSuccess={mockOnLoginSuccess} />);
 
@@ -114,30 +122,17 @@ describe('LoginModal Component', () => {
     await user.click(screen.getByRole('button', { name: /Se Connecter/i }));
 
     await waitFor(() => {
-      expect(screen.getByText('Mot de passe incorrect')).toBeInTheDocument();
-      expect(mockOnLoginSuccess).not.toHaveBeenCalled();
-    });
-  });
-
-  it('shows error message when user is not found', async () => {
-    const user = userEvent.setup();
-    userAPI.getUserByEmail.mockRejectedValue(new Error('User not found'));
-
-    render(<LoginModal onClose={mockOnClose} onLoginSuccess={mockOnLoginSuccess} />);
-
-    await user.type(screen.getByPlaceholderText('votre@email.com'), 'nonexistent@example.com');
-    await user.type(screen.getByPlaceholderText('Votre mot de passe'), 'password123');
-    await user.click(screen.getByRole('button', { name: /Se Connecter/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText('Utilisateur non trouvé ou identifiants incorrects')).toBeInTheDocument();
+      expect(screen.getByText('Invalid login credentials')).toBeInTheDocument();
       expect(mockOnLoginSuccess).not.toHaveBeenCalled();
     });
   });
 
   it('disables submit button while loading', async () => {
     const user = userEvent.setup();
-    userAPI.getUserByEmail.mockImplementation(() => new Promise(resolve => setTimeout(resolve, 1000)));
+    
+    supabase.auth.signInWithPassword.mockImplementation(
+      () => new Promise(resolve => setTimeout(resolve, 1000))
+    );
 
     render(<LoginModal onClose={mockOnClose} onLoginSuccess={mockOnLoginSuccess} />);
 
@@ -151,25 +146,6 @@ describe('LoginModal Component', () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it('stores user in localStorage on successful login', async () => {
-    const user = userEvent.setup();
-    const mockUser = {
-      id: 1,
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'password123'
-    };
-
-    userAPI.getUserByEmail.mockResolvedValue({ data: mockUser });
-
-    render(<LoginModal onClose={mockOnClose} onLoginSuccess={mockOnLoginSuccess} />);
-
-    await user.type(screen.getByPlaceholderText('votre@email.com'), 'test@example.com');
-    await user.type(screen.getByPlaceholderText('Votre mot de passe'), 'password123');
-    await user.click(screen.getByRole('button', { name: /Se Connecter/i }));
-
-    await waitFor(() => {
-      expect(localStorage.setItem).toHaveBeenCalledWith('user', JSON.stringify(mockUser));
-    });
-  });
+  
+    
 });

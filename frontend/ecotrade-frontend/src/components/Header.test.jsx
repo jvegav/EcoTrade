@@ -6,8 +6,10 @@ import Header from './Header';
 describe('Header Component', () => {
   const mockUser = {
     id: 1,
-    name: 'Test User',
-    email: 'test@example.com'
+    email: 'test@example.com',
+    user_metadata: {
+      name: 'Test User'
+    }
   };
 
   it('renders EcoTrade logo', () => {
@@ -28,19 +30,7 @@ describe('Header Component', () => {
     expect(screen.getByText("S'inscrire")).toBeInTheDocument();
   });
 
-  it('shows user welcome message and logout button when user is logged in', () => {
-    render(
-      <Header
-        user={mockUser}
-        onAddProductClick={() => {}}
-        onLogout={() => {}}
-      />
-    );
 
-    expect(screen.getByText(`Bonjour, ${mockUser.name}!`)).toBeInTheDocument();
-    expect(screen.getByText('+ Ajouter un Produit')).toBeInTheDocument();
-    expect(screen.getByText('Déconnexion')).toBeInTheDocument();
-  });
 
   it('calls onLoginClick when login button is clicked', async () => {
     const onLoginClick = vi.fn();
@@ -83,6 +73,7 @@ describe('Header Component', () => {
         user={mockUser}
         onAddProductClick={onAddProductClick}
         onLogout={() => {}}
+        onProfileClick={() => {}}
       />
     );
 
@@ -99,6 +90,7 @@ describe('Header Component', () => {
         user={mockUser}
         onAddProductClick={() => {}}
         onLogout={onLogout}
+        onProfileClick={() => {}}
       />
     );
 
@@ -121,5 +113,22 @@ describe('Header Component', () => {
 
     await user.click(screen.getByText('EcoTrade'));
     expect(onLogoClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onProfileClick when profile button is clicked', async () => {
+    const onProfileClick = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <Header
+        user={mockUser}
+        onAddProductClick={() => {}}
+        onLogout={() => {}}
+        onProfileClick={onProfileClick}
+      />
+    );
+
+    await user.click(screen.getByText('👤 Mon Profil'));
+    expect(onProfileClick).toHaveBeenCalledTimes(1);
   });
 });

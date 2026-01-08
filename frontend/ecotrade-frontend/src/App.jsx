@@ -4,6 +4,7 @@ import ProductList from './components/ProductList';
 import LoginModal from './components/LoginModal';
 import RegisterModal from './components/RegisterModal';
 import AddProductModal from './components/AddProductModal';
+import UserProfile from './components/UserProfile';
 import { productAPI } from './services/api';
 import './App.css';
 
@@ -14,6 +15,7 @@ function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   // Load user from localStorage on mount
   useEffect(() => {
@@ -58,7 +60,12 @@ function App() {
   };
 
   const handleLogoClick = () => {
+    setShowProfile(false);
     fetchProducts();
+  };
+
+  const handleProfileClick = () => {
+    setShowProfile(true);
   };
 
   return (
@@ -70,18 +77,25 @@ function App() {
         onAddProductClick={() => setShowAddProductModal(true)}
         onLogout={handleLogout}
         onLogoClick={handleLogoClick}
+        onProfileClick={handleProfileClick}
       />
 
       <main className="main-content">
-        <div className="hero">
-          <h2>Économie Circulaire pour Étudiants d'Échange</h2>
-          <p>
-            Achetez et vendez des articles d'occasion avec d'autres étudiants.
-            Économisez de l'argent et aidez l'environnement.
-          </p>
-        </div>
+        {showProfile && user ? (
+          <UserProfile user={user} onBack={() => setShowProfile(false)} />
+        ) : (
+          <>
+            <div className="hero">
+              <h2>Économie Circulaire pour Étudiants d'Échange</h2>
+              <p>
+                Achetez et vendez des articles d'occasion avec d'autres étudiants.
+                Économisez de l'argent et aidez l'environnement.
+              </p>
+            </div>
 
-        <ProductList products={products} loading={loading} />
+            <ProductList products={products} loading={loading} />
+          </>
+        )}
       </main>
 
       {showLoginModal && (

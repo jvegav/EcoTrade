@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 
-const Header = ({ user, onLoginClick, onRegisterClick, onAddProductClick, onLogout, onLogoClick }) => {
+const Header = ({ user, onLoginClick, onRegisterClick, onAddProductClick, onLogout, onLogoClick, onProfileClick }) => {
   return (
     <header className="header">
       <div className="header-content">
@@ -12,6 +12,9 @@ const Header = ({ user, onLoginClick, onRegisterClick, onAddProductClick, onLogo
           {user ? (
             <>
               <span className="user-welcome">Bonjour, {user?.user_metadata?.name || 'Utilisateur'} !</span>
+              <button onClick={onProfileClick} className="btn-secondary">
+                👤 Mon Profil
+              </button>
               <button onClick={onAddProductClick} className="btn-primary">
                 + Ajouter un Produit
               </button>
