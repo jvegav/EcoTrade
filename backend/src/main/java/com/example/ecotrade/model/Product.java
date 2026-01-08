@@ -2,6 +2,7 @@ package com.example.ecotrade.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Product")
@@ -11,14 +12,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private Double price;
+
+    @Column(name = "owner_id", nullable = false)
+    private UUID ownerId;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -27,7 +31,7 @@ public class Product {
     private String useTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "owner_id", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
 
     @PrePersist
@@ -39,12 +43,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, Double price, String description, String useTime, User user) {
+    public Product(String name, Double price, String description, String useTime, UUID ownerId) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.useTime = useTime;
-        this.user = user;
+        this.ownerId = ownerId;
     }
 
     // Getters and Setters
@@ -78,6 +82,14 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public UUID getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getDescription() {

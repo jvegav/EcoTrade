@@ -2,14 +2,16 @@ package com.example.ecotrade.dto;
 
 import com.example.ecotrade.model.User;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class UserResponseDTO {
     
-    private String id;
-    private LocalDateTime createdAt;
-    private String name;
+    private UUID id;
     private String email;
-    private String nationality;
+    private String displayName;
+    private String avatarUrl;
+    private LocalDateTime createdAt;
+    private String supabaseId;
 
     // Constructor vacío
     public UserResponseDTO() {
@@ -18,35 +20,20 @@ public class UserResponseDTO {
     // Constructor desde User
     public UserResponseDTO(User user) {
         this.id = user.getId();
-        this.createdAt = user.getCreatedAt();
-        this.name = user.getName();
         this.email = user.getEmail();
-        this.nationality = user.getNationality();
+        this.displayName = user.getDisplayName();
+        this.avatarUrl = user.getAvatarUrl();
+        this.createdAt = user.getCreatedAt();
+        this.supabaseId = user.getSupabaseId();
     }
 
     // Getters and Setters
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
@@ -57,11 +44,35 @@ public class UserResponseDTO {
         this.email = email;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getSupabaseId() {
+        return supabaseId;
+    }
+
+    public void setSupabaseId(String supabaseId) {
+        this.supabaseId = supabaseId;
     }
 }
