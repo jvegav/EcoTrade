@@ -11,3 +11,4 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByOwnerId(UUID ownerId);
 }
+

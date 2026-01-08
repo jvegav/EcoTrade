@@ -29,6 +29,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Endpoints públicos (no requieren autenticación)
                         .requestMatchers("/api/users/auth/**").permitAll()
+                        .requestMatchers("/api/users/email/**").permitAll()
+                        .requestMatchers("/api/users/exists/**").permitAll()
+                        .requestMatchers("/api/users/me").permitAll()
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/api/products/{id}").permitAll()
                         .requestMatchers("/api/products/user/{id}").permitAll()
