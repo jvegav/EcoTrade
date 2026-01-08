@@ -186,9 +186,9 @@ describe('UserProfile Component', () => {
       render(<UserProfile user={mockUser} onBack={mockOnBack} />);
 
       await waitFor(() => {
-        expect(userAPI.getUserByEmail).toHaveBeenCalledWith('test@example.com');
-        expect(userAPI.getUserByEmail).toHaveBeenCalledTimes(2); // Called twice - once for userData, once for userId
+        expect(userAPI.getUserByEmail).toHaveBeenCalledTimes(1);
       });
+      expect(userAPI.getUserByEmail).toHaveBeenCalledWith(mockUser.email);
     });
 
     it('should fetch user products on mount', async () => {
@@ -211,7 +211,7 @@ describe('UserProfile Component', () => {
       render(<UserProfile user={mockUser} onBack={mockOnBack} />);
 
       await waitFor(() => {
-        expect(consoleSpy).toHaveBeenCalledWith('Error fetching user data:', expect.any(Error));
+        expect(consoleSpy).toHaveBeenCalledWith('Error fetching user products:', expect.any(Error));
       });
 
       consoleSpy.mockRestore();

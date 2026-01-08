@@ -141,6 +141,7 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<UserResponseDTO> getCurrentUser(HttpServletRequest request) {
         try {
+            System.out.println("Fetching current user");
             String userEmail = (String) request.getAttribute("userEmail");
             if (userEmail == null) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

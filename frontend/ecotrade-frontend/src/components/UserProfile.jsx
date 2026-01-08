@@ -6,28 +6,19 @@ import './UserProfile.css';
 const UserProfile = ({ user, onBack }) => {
   const [userProducts, setUserProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    fetchUserData();
     fetchUserProducts();
   }, [user]);
-
-  const fetchUserData = async () => {
-    try {
-      const response = await userAPI.getUserByEmail(user.email);
-      setUserData(response.data);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
 
   const fetchUserProducts = async () => {
     setLoading(true);
     try {
-      const response = await userAPI.getUserByEmail(user.email);
-      const userId = response.data.id;
-      const productsResponse = await productAPI.getProductsByUserId(userId);
+      // Solo necesitamos el ID del backend para obtener los productos
+      const userResponse = await userAPI.getUserByEmail(user.email);
+      const backendUserId = userResponse.data.id;
+
+      const productsResponse = await productAPI.getProductsByUserId(backendUserId);
       setUserProducts(productsResponse.data);
     } catch (error) {
       console.error('Error fetching user products:', error);
@@ -51,14 +42,12 @@ const UserProfile = ({ user, onBack }) => {
             {user?.user_metadata?.name || 'Utilisateur'}
           </h2>
           <p className="profile-email">{user?.email}</p>
-          {userData && (
-            <div className="profile-stats">
-              <div className="stat">
-                <span className="stat-value">{userProducts.length}</span>
-                <span className="stat-label">Produits Publiés</span>
-              </div>
+          <div className="profile-stats">
+            <div className="stat">
+              <span className="stat-value">{userProducts.length}</span>
+              <span className="stat-label">Produits Publiés</span>
             </div>
-          )}
+          </div>
         </div>
       </div>
 

@@ -32,14 +32,7 @@ public class ProductController {
         return ResponseEntity.ok(productDTOs);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
-        return productService.getProductById(id)
-                .map(ProductResponseDTO::new)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
+    // Endpoint específico debe ir ANTES del genérico para evitar ambigüedad
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ProductResponseDTO>> getProductsByUserId(@PathVariable Long userId) {
         List<Product> products = productService.getProductsByUserId(userId);
@@ -47,6 +40,14 @@ public class ProductController {
                 .map(ProductResponseDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(productDTOs);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
+        return productService.getProductById(id)
+                .map(ProductResponseDTO::new)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/user/{userId}")
