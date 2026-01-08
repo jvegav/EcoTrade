@@ -3,7 +3,7 @@ import { productAPI, userAPI } from '../services/api';
 import ProductCard from './ProductCard';
 import './UserProfile.css';
 
-const UserProfile = ({ user, onBack }) => {
+const UserProfile = ({ user, onBack, onLogout }) => {
   const [userProducts, setUserProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,6 +48,9 @@ const UserProfile = ({ user, onBack }) => {
               <span className="stat-label">Produits Publiés</span>
             </div>
           </div>
+          <button onClick={onLogout} className="btn-logout">
+            Déconnexion
+          </button>
         </div>
       </div>
 
