@@ -12,11 +12,12 @@ const Header = ({ user, onLoginClick, onRegisterClick, onAddProductClick, onLogo
           {user ? (
             <>
               <span className="user-welcome">Bonjour, {user?.user_metadata?.name || 'Utilisateur'} !</span>
-              <button onClick={onProfileClick} className="btn-secondary">
-                👤 Mon Profil
-              </button>
+              
               <button onClick={onAddProductClick} className="btn-primary">
                 + Ajouter un Produit
+              </button>
+              <button onClick={onProfileClick} className="btn-secondary">
+                 Mon Profil
               </button>
             </>
           ) : (
