@@ -3,29 +3,26 @@ package com.example.ecotrade.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private String name;
+    private UUID id;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
-    private String nationality;
+    @Column(name = "display_name")
+    private String displayName;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Column(name = "supabase_id", unique = true)
     private String supabaseId;
@@ -42,19 +39,19 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String nationality, String password) {
-        this.name = name;
+    public User(String email, String displayName, String avatarUrl, String supabaseId) {
         this.email = email;
-        this.nationality = nationality;
-        this.password = password;
+        this.displayName = displayName;
+        this.avatarUrl = avatarUrl;
+        this.supabaseId = supabaseId;
     }
 
     // Getters and Setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -66,14 +63,6 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -82,28 +71,20 @@ public class User {
         this.email = email;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getSupabaseId() {
@@ -112,5 +93,13 @@ public class User {
 
     public void setSupabaseId(String supabaseId) {
         this.supabaseId = supabaseId;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

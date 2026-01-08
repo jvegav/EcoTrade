@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable UUID id) {
         return userService.getUserById(id)
                 .map(UserResponseDTO::new)
                 .map(ResponseEntity::ok)
@@ -64,7 +65,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody User userDetails) {
         try {
             User updatedUser = userService.updateUser(id, userDetails);
             UserResponseDTO userDTO = new UserResponseDTO(updatedUser);
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
         try {
             userService.deleteUser(id);
             return ResponseEntity.ok().body("User deleted successfully");
@@ -96,11 +97,10 @@ public class UserController {
             // Solo sincronizar datos adicionales si el usuario no existe
             if (!userService.existsByEmail(registerRequest.getEmail())) {
                 User user = new User();
-                user.setName(registerRequest.getName());
+                user.setId(UUID.fromString(registerRequest.getSupabaseId()));
                 user.setEmail(registerRequest.getEmail());
-                user.setNationality(registerRequest.getNationality());
+                user.setDisplayName(registerRequest.getName());
                 user.setSupabaseId(registerRequest.getSupabaseId());
-                user.setPassword("");
 
                 User createdUser = userService.createUser(user);
                 UserResponseDTO userDTO = new UserResponseDTO(createdUser);

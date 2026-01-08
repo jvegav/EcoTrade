@@ -2,17 +2,18 @@ package com.example.ecotrade.dto;
 
 import com.example.ecotrade.model.Product;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class ProductResponseDTO {
     
     private Long id;
-    private LocalDateTime createdAt;
     private String name;
     private Double price;
+    private UUID ownerId;
+    private LocalDateTime createdAt;
     private String description;
     private String useTime;
     private String userName;
-    private Long userId;
 
     // Constructor vacío
     public ProductResponseDTO() {
@@ -21,14 +22,14 @@ public class ProductResponseDTO {
     // Constructor desde Product
     public ProductResponseDTO(Product product) {
         this.id = product.getId();
-        this.createdAt = product.getCreatedAt();
         this.name = product.getName();
         this.price = product.getPrice();
+        this.ownerId = product.getOwnerId();
+        this.createdAt = product.getCreatedAt();
         this.description = product.getDescription();
         this.useTime = product.getUseTime();
         if (product.getUser() != null) {
-            this.userName = product.getUser().getName();
-            this.userId = product.getUser().getId();
+            this.userName = product.getUser().getDisplayName();
         }
     }
 
@@ -39,14 +40,6 @@ public class ProductResponseDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getName() {
@@ -63,6 +56,22 @@ public class ProductResponseDTO {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public UUID getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getDescription() {
@@ -87,13 +96,5 @@ public class ProductResponseDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }
