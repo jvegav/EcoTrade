@@ -32,6 +32,7 @@ export const userAPI = {
   getAllUsers: () => api.get('/users'),
   getUserById: (id) => api.get(`/users/${id}`),
   getUserByEmail: (email) => api.get(`/users/email/${email}`),
+  getMe: () => api.get('/users/me'),
   createUser: (userData) => api.post('/users', userData),
   updateUser: (id, userData) => api.put(`/users/${id}`, userData),
   deleteUser: (id) => api.delete(`/users/${id}`),
